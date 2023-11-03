@@ -1,5 +1,5 @@
 /*
-================ GETTING CALENDARS ================
+================ GET CALENDAR ID'S AND EMOJIS ================
 */
 
 function getCalendars() {
@@ -8,22 +8,16 @@ function getCalendars() {
   calendars = Calendar.CalendarList.list({minAccessRole : 'owner'});
   // Returns all the calendars OWNED by the authenticated user.
 
-  for (let i = 0; i < calendars.items.length; i++) {
-    const calendar = calendars.items[i];
-
-    if (!calendar.summary.includes('My Calendar')) {
-      // Skip the default Calendar
-      calendarEmoji = calendar.summary.slice(0, 2).trim();
-      // Get the first 2 chars of the title (some emojis have a length of 2), remove trailing whitespace
-      calendarArray.push({'id' : calendar.id, 'emoji' : calendarEmoji})
-      // Store each Calendar id and its associated emoji
-    }
+  for (calendar of calendars.items) {
+    calendarArray.push({'id' : calendar.id, 'emoji' : extractEmoji(calendar.summary)})
+    // Store each Calendar id and its associated emoji
   }
+  console.log(calendarArray)
   return calendarArray
 }
 
 /*
-================ ADDING EMOJIS ================
+================ ADD EMOJIS ================
 */
 
 function addEventEmoji(event, emoji, calendarID) {
@@ -31,4 +25,20 @@ function addEventEmoji(event, emoji, calendarID) {
   // Put emoji in front of the title
   event = Calendar.Events.patch({'summary' : newTitle}, calendarID, event.id)
   // Push changes
+}
+
+/*
+================ LOOP ================
+*/
+
+function calendarLoop() {
+  for (calendar of getCalendars( )) { // For a given Calendar
+    events = Calendar.Events.list(calendar.id);
+    
+    for (event of events.items) { // For a given Event
+      if (!event.summary.includes(calendar.emoji)) {
+        addEventEmoji(event, calendar.emoji, calendar.id);
+      }
+    }
+  }
 } 
