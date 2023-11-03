@@ -17,8 +17,10 @@ Importantly, this script doesn't *actually* check if the calendar / task list na
 
 # Usage
 
-1. Create a new [Apps Script](https://script.google.com/home) project
-2.  In the *Editor* tab:
+1. Create a new project in [Google Cloud Developer Console](https://console.cloud.google.com) - this will be necessary for authentication later
+2. Create a new [Apps Script](https://script.google.com/home) project - this is where all the actual code and triggers will be
+3.  In the *Editor* tab:
     -  Upload all the project files - `Emojify.gs`, `Calendar.gs` and `Tasks.gs`
     -  Add and authenticate Calendar and Tasks services
-3.  Automate script execution - In the *Triggers* tab create a time-driven trigger running `main` every minute
+4.  Automate script execution - In the *Triggers* tab create a time-driven trigger running `main` every minute
+5.  Done!
