@@ -3,8 +3,8 @@
 */
 
 function extractEmoji(nameString) {
-  emojiList = nameString.match(/(\u200d)|\p{EPres}|\p{ExtPict}/gu)
-  // match ZWJ, {Emoji_Presentation} and {Extended_Pictographic} in the name
+  emojiList = nameString.match(/(\u200d)|(\ufe0f)|\p{EPres}|\p{ExtPict}/gu)
+  // match ZWJ, Variation Selector-16, {Emoji_Presentation} and {Extended_Pictographic} in the name
 
   if (emojiList === null) {
     return '' // no emoji
